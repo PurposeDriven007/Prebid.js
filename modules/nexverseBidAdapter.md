@@ -33,9 +33,11 @@ var adUnits = [{
     params: {
       uid: '12345',
       pubId: '54321',
-      pubEpid: 'abcde'
+      pubEpid: 'abcde',
+      placementId: '12345',
+      placementName: 'IN_abc.com_mid_300x250'
     },
-    isDebug: true
+    isDebug: false // optional i.e need true for testing
   }]
 }];
 ```
