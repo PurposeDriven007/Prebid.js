@@ -16,8 +16,13 @@ To correctly configure the Nexverse Bid Adapter, the following parameters are re
 | `uid`        | required | string | Unique User ID assigned by Nexverse for the publisher |
 | `pubId`     | required | string | The unique ID for the publisher                     |
 | `pubEpid`   | required | string | The unique endpoint ID for the publisher            |
-| `placementId`   | required | string | The unique placement ID for the publisher            |
-| `placementName`   | required | string | The unique placment Name for the publisher            |
+| `adPlacementId`   | required | string | The unique placement ID for the publisher            |
+| `adPlacementName`   | required | string | The unique placment Name for the publisher            |
+| `adPlacementId`   | required | string | The unique placement ID for the publisher            |
+| `siteName`   | required | string | The Site Name of the publisher            |
+| `siteId`   | required | string | The Site ID for the publisher            |
+| `date`   | required | string | The Placement Creation Date(YYYYMMDD)            |
+
 
 ### Example Configuration
 The following is an example configuration for a Nexverse bid request using Prebid.js:
@@ -36,8 +41,11 @@ var adUnits = [{
       uid: '12345',
       pubId: '54321',
       pubEpid: 'abcde',
-      placementId: '12345',
-      placementName: 'IN_abc.com_mid_300x250'
+      adPlacementId: '12345',
+      adPlacementName: 'IN_abc.com_mid_300x250',
+      siteName: 'nexverse.ai',
+      siteId: '12',
+      date: '20240101'
     },
     isDebug: false // optional i.e need true for testing
   }]

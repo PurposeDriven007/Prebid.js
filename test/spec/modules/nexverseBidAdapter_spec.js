@@ -13,8 +13,8 @@ describe('nexverseBidAdapterTests', () => {
       'params': {
         'uid': '77d4a2eb3d209ce6c7691dc79fcab358',
         'pubId': '24051',
-        'placementId': '12345',
-        'placementName': 'IN_abc.com_mid_300x250'
+        'adPlacementId': '12345',
+        'adPlacementName': 'IN_abc.com_mid_300x250'
       },
     };
 
@@ -33,7 +33,7 @@ describe('nexverseBidAdapterTests', () => {
     it('should return false when valid params are not passed', function () {
       let bid = Object.assign({}, sbid);
       delete bid.params;
-      bid.params = {uid: '', pubId: '', pubEpid: '', placementId: '', placementName: ''};
+      bid.params = {uid: '', pubId: '', pubEpid: '', adPlacementId: '', adPlacementName: ''};
       expect(spec.isBidRequestValid(bid)).to.equal(false);
     });
 
@@ -46,7 +46,7 @@ describe('nexverseBidAdapterTests', () => {
           sizes: [[300, 250]]
         }
       };
-      bid.params = {uid: '77d4a2eb3d209ce6c7691dc79fcab358', pubId: '24051', placementId: '12345', placementName: 'IN_abc.com_mid_300x250'};
+      bid.params = {uid: '77d4a2eb3d209ce6c7691dc79fcab358', pubId: '24051', adPlacementId: '12345', adPlacementName: 'IN_abc.com_mid_300x250', siteName: 'IN_abc.com', siteId: '12', date: '20240101'};
       expect(spec.isBidRequestValid(bid)).to.equal(false);
     });
     it('should return true when valid params are passed as nums', function () {
@@ -57,7 +57,7 @@ describe('nexverseBidAdapterTests', () => {
           sizes: [[300, 250]]
         }
       };
-      bid.params = {uid: '77d4a2eb3d209ce6c7691dc79fcab358', pubId: '24051', pubEpid: '34561', placementId: '12345', placementName: 'IN_abc.com_mid_300x250'};
+      bid.params = {uid: '77d4a2eb3d209ce6c7691dc79fcab358', pubId: '24051', pubEpid: '34561', adPlacementId: '12345', adPlacementName: 'IN_abc.com_mid_300x250', siteName: 'IN_abc.com', siteId: '12', date: '20240101'};
       expect(spec.isBidRequestValid(bid)).to.equal(true);
     });
   });
@@ -105,35 +105,41 @@ describe('nexverseBidAdapterTests', () => {
   });
 
   describe('buildEndpointUrl', () => {
-    it('should construct the URL with uid, pubId, pubEpid, placementId and placementName', function () {
+    it('should construct the URL with uid, pubId, pubEpid, adPlacementId,  adPlacementName siteId, siteName and date', function () {
       const bid = {
         params: {
           uid: '12345',
           pubId: '67890',
           pubEpid: 'abcdef',
-          placementId: '12345',
-          placementName: 'IN_abc.com_mid_300x250'
+          adPlacementId: '12345',
+          adPlacementName: 'IN_abc.com_mid_300x250',
+          siteName: 'IN_abc.com',
+          siteId: '12',
+          date: '20240101'
         },
         isDebug: false
       };
-      const expectedUrl = `${BIDDER_ENDPOINT}?uid=12345&pub_id=67890&pub_epid=abcdef&placement_id=12345&placement_name=IN_abc.com_mid_300x250`;
+      const expectedUrl = `${BIDDER_ENDPOINT}?uid=12345&pub_id=67890&pub_epid=abcdef&placement_id=12345&placement_name=IN_abc.com_mid_300x250&site_name=IN_abc.com&site_id=12&date=20240101`;
       expect(buildEndpointUrl(BIDDER_ENDPOINT, bid)).to.equal(expectedUrl);
     });
   });
 
   describe('buildEndpointUrl', () => {
-    it('should construct the test URL with uid, pubId, pubEpid, placementId and placementName', function () {
+    it('should construct the test URL with uid, pubId, pubEpid, adPlacementId and adPlacementName', function () {
       const bid = {
         params: {
           uid: '12345',
           pubId: '67890',
           pubEpid: 'abcdef',
-          placementId: '12345',
-          placementName: 'IN_abc.com_mid_300x250'
+          adPlacementId: '12345',
+          adPlacementName: 'IN_abc.com_mid_300x250',
+          siteName: 'IN_abc.com',
+          siteId: '12',
+          date: '20240101'
         },
         isDebug: true
       };
-      const expectedUrl = `${BIDDER_ENDPOINT}?uid=12345&pub_id=67890&pub_epid=abcdef&placement_id=12345&placement_name=IN_abc.com_mid_300x250&test=1`;
+      const expectedUrl = `${BIDDER_ENDPOINT}?uid=12345&pub_id=67890&pub_epid=abcdef&placement_id=12345&placement_name=IN_abc.com_mid_300x250&site_name=IN_abc.com&site_id=12&date=20240101&test=1`;
       expect(buildEndpointUrl(BIDDER_ENDPOINT, bid)).to.equal(expectedUrl);
     });
   });

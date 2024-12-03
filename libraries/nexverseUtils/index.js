@@ -37,9 +37,9 @@ export function getDeviceModel() {
  * @returns {string} The Endpoint URL with required parameters.
  */
 export function buildEndpointUrl(bidderEndPoint, bid) {
-  const { uid, pubId, pubEpid, placementId, placementName } = bid.params;
+  const { uid, pubId, pubEpid, adPlacementId, adPlacementName, siteName, siteId, date } = bid.params;
   const isDebug = bid.isDebug;
-  let endPoint = `${bidderEndPoint}?uid=${encodeURIComponent(uid)}&pub_id=${encodeURIComponent(pubId)}&pub_epid=${encodeURIComponent(pubEpid)}&placement_id=${encodeURIComponent(placementId)}&placement_name=${encodeURIComponent(placementName)}`;
+  let endPoint = `${bidderEndPoint}?uid=${encodeURIComponent(uid)}&pub_id=${encodeURIComponent(pubId)}&pub_epid=${encodeURIComponent(pubEpid)}&placement_id=${encodeURIComponent(adPlacementId)}&placement_name=${encodeURIComponent(adPlacementName)}&site_name=${encodeURIComponent(siteName)}&site_id=${encodeURIComponent(siteId)}&date=${encodeURIComponent(date)}`;
   if (isDebug) {
     endPoint = `${endPoint}&test=1`;
   }
@@ -56,8 +56,12 @@ export function isBidRequestValid(bid) {
     bid.params.uid && bid.params.uid.trim() &&
     bid.params.pubId && bid.params.pubId.trim() &&
     bid.params.pubEpid && bid.params.pubEpid.trim() &&
-    bid.params.placementId && bid.params.placementId.trim() &&
-    bid.params.placementName && bid.params.placementName.trim()
+    bid.params.adPlacementId && bid.params.adPlacementId.trim() &&
+    bid.params.adPlacementName && bid.params.adPlacementName.trim() &&
+    bid.params.siteName && bid.params.siteName.trim() &&
+    bid.params.siteId && bid.params.siteId.trim() &&
+    bid.params.date && bid.params.date.trim()
+
   );
   if (!isValid) {
     logError(`${LOG_ERROR_PREFIX} Missing required bid parameters.`);
