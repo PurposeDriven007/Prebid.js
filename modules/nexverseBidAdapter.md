@@ -21,7 +21,7 @@ To correctly configure the Nexverse Bid Adapter, the following parameters are re
 | `adPlacementId`   | required | string | The unique placement ID for the publisher            |
 | `siteName`   | required | string | The Site Name of the publisher            |
 | `siteId`   | required | string | The Site ID for the publisher            |
-| `date`   | required | string | The Placement Creation Date(YYYYMMDD)            |
+| `date`   | required | string | The Placement Creation Date(YYYY-MM-DD)            |
 
 
 ### Example Configuration
