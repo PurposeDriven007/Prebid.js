@@ -45,7 +45,7 @@ var adUnits = [{
       adPlacementName: 'IN_abc.com_mid_300x250',
       siteName: 'nexverse.ai',
       siteId: '12',
-      date: '20240101'
+      date: '2024-01-01'
     },
     isDebug: false // optional i.e need true for testing
   }]
