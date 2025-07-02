@@ -16,6 +16,7 @@ To correctly configure the Nexverse Bid Adapter, the following parameters are re
 | `uid`        | required | string | Unique User ID assigned by Nexverse for the publisher |
 | `pubId`     | required | string | The unique ID for the publisher                     |
 | `pubEpid`   | required | string | The unique endpoint ID for the publisher            |
+| `bidFloor`  | optional | float  | The unique endpoint ID for the publisher            |
 
 ### Example Configuration
 The following is an example configuration for a Nexverse bid request using Prebid.js:
@@ -33,7 +34,8 @@ var adUnits = [{
     params: {
       uid: '12345',
       pubId: '54321',
-      pubEpid: 'abcde'
+      pubEpid: 'abcde',
+      bidFloor:0.01
     },
     isDebug: false // Optional, i.e True for debug mode
   }]

@@ -1,9 +1,9 @@
-import { logError, logInfo, logWarn, generateUUID } from '../../src/utils.js';
+import { logError, logInfo, logWarn, generateUUID } from "../../src/utils.js";
 
-const LOG_WARN_PREFIX = '[Nexverse warn]: ';
-const LOG_ERROR_PREFIX = '[Nexverse error]: ';
-const LOG_INFO_PREFIX = '[Nexverse info]: ';
-const NEXVERSE_USER_COOKIE_KEY = 'user_nexverse';
+const LOG_WARN_PREFIX = "[Nexverse warn]: ";
+const LOG_ERROR_PREFIX = "[Nexverse error]: ";
+const LOG_INFO_PREFIX = "[Nexverse info]: ";
+const NEXVERSE_USER_COOKIE_KEY = "user_nexverse";
 
 /**
  * Determines the device model (if possible).
@@ -12,22 +12,22 @@ const NEXVERSE_USER_COOKIE_KEY = 'user_nexverse';
 export function getDeviceModel() {
   const ua = navigator.userAgent;
   if (/iPhone/i.test(ua)) {
-    return 'iPhone';
+    return "iPhone";
   } else if (/iPad/i.test(ua)) {
-    return 'iPad';
+    return "iPad";
   } else if (/Android/i.test(ua)) {
     const match = ua.match(/Android.*;\s([a-zA-Z0-9\s]+)\sBuild/);
-    return match ? match[1].trim() : 'Unknown Android Device';
+    return match ? match[1].trim() : "Unknown Android Device";
   } else if (/Windows Phone/i.test(ua)) {
-    return 'Windows Phone';
+    return "Windows Phone";
   } else if (/Macintosh/i.test(ua)) {
-    return 'Mac';
+    return "Mac";
   } else if (/Linux/i.test(ua)) {
-    return 'Linux';
+    return "Linux";
   } else if (/Windows/i.test(ua)) {
-    return 'Windows PC';
+    return "Windows PC";
   }
-  return '';
+  return "";
 }
 
 /**
@@ -39,7 +39,11 @@ export function getDeviceModel() {
 export function buildEndpointUrl(bidderEndPoint, bid) {
   const { uid, pubId, pubEpid } = bid.params;
   const isDebug = bid.isDebug;
-  let endPoint = `${bidderEndPoint}?uid=${encodeURIComponent(uid)}&pub_id=${encodeURIComponent(pubId)}&pub_epid=${encodeURIComponent(pubEpid)}`;
+  let endPoint = `${bidderEndPoint}?uid=${encodeURIComponent(
+    uid
+  )}&pub_id=${encodeURIComponent(pubId)}&pub_epid=${encodeURIComponent(
+    pubEpid
+  )}`;
   if (isDebug) {
     endPoint = `${endPoint}&test=1`;
   }
@@ -53,9 +57,12 @@ export function buildEndpointUrl(bidderEndPoint, bid) {
 export function isBidRequestValid(bid) {
   const isValid = !!(
     bid.params &&
-    bid.params.uid && bid.params.uid.trim() &&
-    bid.params.pubId && bid.params.pubId.trim() &&
-    bid.params.pubEpid && bid.params.pubEpid.trim()
+    bid.params.uid &&
+    bid.params.uid.trim() &&
+    bid.params.pubId &&
+    bid.params.pubId.trim() &&
+    bid.params.pubEpid &&
+    bid.params.pubEpid.trim()
   );
   if (!isValid) {
     logError(`${LOG_ERROR_PREFIX} Missing required bid parameters.`);
@@ -75,7 +82,7 @@ export function parseNativeResponse(adm) {
     const admObj = JSON.parse(adm);
     return admObj.native;
   } catch (e) {
-    printLog('error', `Error parsing native response: `, e)
+    printLog("error", `Error parsing native response: `, e);
     logError(`${LOG_ERROR_PREFIX} Error parsing native response: `, e);
     return {};
   }
@@ -91,20 +98,22 @@ export function printLog(type, ...args) {
   const prefixes = {
     error: LOG_ERROR_PREFIX,
     warning: LOG_WARN_PREFIX, // Assuming warning uses the same prefix as error
-    info: LOG_INFO_PREFIX
+    info: LOG_INFO_PREFIX,
   };
 
   // Construct the log message by joining all arguments into a single string
   const logMessage = args
-    .map(arg => (arg instanceof Error ? `${arg.name}: ${arg.message}` : arg))
-    .join(' '); // Join all arguments into a single string with a space separator
+    .map((arg) => (arg instanceof Error ? `${arg.name}: ${arg.message}` : arg))
+    .join(" "); // Join all arguments into a single string with a space separator
   // Add prefix and punctuation (for info type)
-  const formattedMessage = `${prefixes[type] || LOG_INFO_PREFIX} ${logMessage}${type === 'info' ? '.' : ''}`;
+  const formattedMessage = `${prefixes[type] || LOG_INFO_PREFIX} ${logMessage}${
+    type === "info" ? "." : ""
+  }`;
   // Map the log type to its corresponding log function
   const logFunctions = {
     error: logError,
     warning: logWarn,
-    info: logInfo
+    info: logInfo,
   };
 
   // Call the appropriate log function (defaulting to logInfo)
@@ -122,9 +131,13 @@ export const getUid = (storage) => {
     const expirationInMs = 60 * 60 * 24 * 1000; // 1 day in milliseconds
     const expirationTime = new Date(Date.now() + expirationInMs); // Set expiration time
     // Set the cookie with the expiration date
-    storage.setCookie(NEXVERSE_USER_COOKIE_KEY, nexverseUid, expirationTime.toUTCString());
+    storage.setCookie(
+      NEXVERSE_USER_COOKIE_KEY,
+      nexverseUid,
+      expirationTime.toUTCString()
+    );
   } catch (e) {
-    printLog('error', `Failed to set UID cookie: ${e.message}`);
+    printLog("error", `Failed to set UID cookie: ${e.message}`);
   }
   return nexverseUid;
 };
